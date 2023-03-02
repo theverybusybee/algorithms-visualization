@@ -21,7 +21,7 @@ export const Input: React.FC<InputProps> = ({
       ? `Максимум — ${maxLength} символа`
       : `Максимальное число — ${max}`;
 
-  return (
+      return (
     <div className={`${styles.content} ${extraClass}`}>
       <input
         className={`${styles.input} text text_type_input text_color_input`}
