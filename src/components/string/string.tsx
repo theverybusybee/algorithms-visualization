@@ -1,4 +1,4 @@
-import style from "./string.module.css";
+import styles from "./string.module.css";
 import React, {
   ChangeEvent,
   Dispatch,
@@ -35,7 +35,6 @@ export const StringComponent: React.FC = () => {
     sortStringArray(arrForDisplay, setSortingCharactersState);
   };
 
-  console.log(sortingCharactersState);
 
   const swap = (
     firstElement: number,
@@ -74,8 +73,8 @@ export const StringComponent: React.FC = () => {
 
   return (
     <SolutionLayout title="Строка">
-      <div className={style.stringContainer}>
-        <form onSubmit={submit} className={style.inputContainer}>
+      <div className={styles.stringContainer}>
+        <form onSubmit={submit} className={styles.inputContainer}>
           <Input
             placeholder="Введите текст"
             maxLength={11}
@@ -83,9 +82,9 @@ export const StringComponent: React.FC = () => {
           ></Input>
           <Button type="submit" text="Развернуть" linkedList="small"></Button>
         </form>
-        <p className={style.caption}>Максимум — 11 символов</p>
+        <p className={styles.caption}>Максимум — 11 символов</p>
       </div>
-      <div className={style.circlesContainer}>
+      <div className={styles.circlesContainer}>
         {sortingCharactersState &&
           sortingCharactersState.map((obj, index) => {
             return (
