@@ -35,7 +35,6 @@ export const StringComponent: React.FC = () => {
     sortStringArray(arrForDisplay, setSortingCharactersState);
   };
 
-
   const swap = (
     firstElement: number,
     secondElement: number,
