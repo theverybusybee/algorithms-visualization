@@ -8,7 +8,7 @@ import React, {
 } from "react";
 import { setDelayForAnimation } from "../utils/utils";
 import { ITERATION_TIME_FOR_ANIMATION_LONG } from "../utils/constants";
-import { TCharactersArray, TStringArray } from "../utils/types";
+import { TSortingStringArray, TStringArray } from "../utils/types";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import { ElementStates } from "../../types/element-states";
 import { Input } from "../ui/input/input";
@@ -18,7 +18,7 @@ import { Circle } from "../ui/circle/circle";
 export const StringComponent: React.FC = () => {
   const [inputValueState, setInputValueState] = useState<TStringArray>([]);
   const [sortingCharactersState, setSortingCharactersState] = useState<
-    TCharactersArray[]
+    TSortingStringArray[]
   >([]);
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -28,17 +28,17 @@ export const StringComponent: React.FC = () => {
 
   const submit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const arrForDisplay = inputValueState.map((character) => {
-      return { character: character, type: ElementStates.Default };
+    const arrForDisplay = inputValueState.map((item) => {
+      return { value: item, type: ElementStates.Default };
     });
-    setSortingCharactersState(arrForDisplay);
+    setSortingCharactersState([...arrForDisplay]);
     sortStringArray(arrForDisplay, setSortingCharactersState);
   };
 
   const swap = (
     firstElement: number,
     secondElement: number,
-    arr: TCharactersArray[]
+    arr: TSortingStringArray[]
   ) => {
     const saveFirstElement = arr[firstElement];
     arr[firstElement] = arr[secondElement];
@@ -47,8 +47,8 @@ export const StringComponent: React.FC = () => {
   };
 
   async function sortStringArray(
-    arr: TCharactersArray[],
-    setSortingCharactersState: Dispatch<SetStateAction<TCharactersArray[]>>
+    arr: TSortingStringArray[],
+    setSortingCharactersState: Dispatch<SetStateAction<TSortingStringArray[]>>
   ) {
     const mid = Math.floor((arr.length - 1) / 2);
     for (
@@ -86,9 +86,7 @@ export const StringComponent: React.FC = () => {
       <div className={styles.circlesContainer}>
         {sortingCharactersState &&
           sortingCharactersState.map((obj, index) => {
-            return (
-              <Circle letter={obj.character} key={index} state={obj.type} />
-            );
+            return <Circle letter={obj.value} key={index} state={obj.type} />;
           })}
       </div>
     </SolutionLayout>

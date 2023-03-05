@@ -4,7 +4,7 @@ import {
   ITERATION_TIME_FOR_ANIMATION_LONG,
   ITERATION_TIME_FOR_ANIMATION_SHORT,
 } from "./constants";
-import { TSortingArray } from "./types";
+import { TSortingNumberArray } from "./types";
 import { setDelayForAnimation } from "./utils";
 
 export const generateNumber = (minLen: number, maxLen: number) => {
@@ -19,9 +19,9 @@ export const randomArr = (
   minArrLen: number,
   maxArrLen: number,
   i = 0,
-  arr: TSortingArray[] = [],
+  arr: TSortingNumberArray[] = [],
   arrLength = generateNumber(minArrLen, maxArrLen)
-): TSortingArray[] => {
+): TSortingNumberArray[] => {
   if (i < arrLength) {
     const number = generateNumber(0, 100);
     number && arr.push({ value: number, type: ElementStates.Default });
@@ -32,7 +32,7 @@ export const randomArr = (
 };
 
 const swap = (
-  arr: TSortingArray[],
+  arr: TSortingNumberArray[],
   firstIndex: number,
   secondIndex: number
 ) => {
@@ -43,9 +43,9 @@ const swap = (
 
 // сортировка пузырьком
 export async function bubbleSort(
-  arr: TSortingArray[],
+  arr: TSortingNumberArray[],
   isInAscendingOrder: string,
-  setSortingNumbersState: Dispatch<SetStateAction<TSortingArray[]>>
+  setSortingNumbersState: Dispatch<SetStateAction<TSortingNumberArray[]>>
 ) {
   const { length } = arr;
   switch (isInAscendingOrder) {
@@ -90,9 +90,9 @@ export async function bubbleSort(
 
 // сортировка выбором
 export async function selectionSort(
-  arr: TSortingArray[],
+  arr: TSortingNumberArray[],
   isInAscendingOrder: string,
-  setSortingNumbersState: Dispatch<SetStateAction<TSortingArray[]>>
+  setSortingNumbersState: Dispatch<SetStateAction<TSortingNumberArray[]>>
 ) {
   const { length } = arr;
   switch (isInAscendingOrder) {

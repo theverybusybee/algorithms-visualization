@@ -2,12 +2,12 @@ import { ElementStates } from "../../types/element-states";
 
  export type TStringArray = string[];
 
- export type TCharactersArray = {
-  character: string,
+ export type TSortingStringArray = {
+  value: string,
   type: ElementStates,
  };
 
-  export type TSortingArray = {
+  export type TSortingNumberArray = {
   value: number,
   type: ElementStates,
  };

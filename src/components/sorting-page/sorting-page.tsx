@@ -6,12 +6,12 @@ import { RadioInput } from "../ui/radio-input/radio-input";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import { Direction } from "../../types/direction";
 import { randomArr, bubbleSort, selectionSort } from "../utils/sort-functions";
-import { TSortingArray } from "../utils/types";
+import { TSortingNumberArray } from "../utils/types";
 
 export const SortingPage: React.FC = () => {
   const [radioInputState, setRadioInputState] = useState<string>("selectionSort");
   const [directionState, setDirectionState] = useState<string>("");
-  const [arrState, setArrState] = useState<TSortingArray[]>([]);
+  const [arrState, setArrState] = useState<TSortingNumberArray[]>([]);
 console.log(arrState)
 
   const setSortingKind = (e: ChangeEvent<HTMLInputElement>) => {
@@ -25,7 +25,7 @@ console.log(arrState)
       ? bubbleSort(arrState, buttonChosen!, setArrState)
       : selectionSort(arrState, buttonChosen!, setArrState);
   };
-console.log(arrState)
+
   const test = () => {
     setArrState(randomArr(3, 17));
   };

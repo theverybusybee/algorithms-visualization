@@ -8,16 +8,12 @@ import { ElementStates } from "../../types/element-states";
 import { Circle } from "../ui/circle/circle";
 import { ITERATION_TIME_FOR_ANIMATION_SHORT } from "../utils/constants";
 import { setDelayForAnimation } from "../utils/utils";
-
-type TArrType = {
-  value: string | number;
-  type: ElementStates;
-};
+import { TSortingStringArray } from "../utils/types";
 
 export const StackPage: React.FC = () => {
   const [inputState, setInputState] = useState("");
-  const [stackArrState, setStackArrState] = useState<TArrType[]>([]);
-  const [stack] = useState(new Stack<TArrType>());
+  const [stackArrState, setStackArrState] = useState<TSortingStringArray[]>([]);
+  const [stack] = useState(new Stack<TSortingStringArray>());
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputState(e.currentTarget.value);
@@ -48,7 +44,7 @@ export const StackPage: React.FC = () => {
     setStackArrState([...stack.getContent()]);
   };
 
-  const isTop = (arr: TArrType[], index: number): string => {
+  const isTop = (arr: TSortingStringArray[], index: number): string => {
     const { length } = arr;
     return length - 1 === index ? "top" : "";
   };
