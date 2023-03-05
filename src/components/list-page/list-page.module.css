@@ -30,4 +30,11 @@
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
+  align-items: center;
+}
+
+.circle {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
