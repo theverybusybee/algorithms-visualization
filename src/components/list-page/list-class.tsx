@@ -1,12 +1,16 @@
 import { ElementStates } from "../../types/element-states";
-import { TSortingArray, TSortingStringArray } from "../utils/types";
+import { TSortingArray } from "../utils/types";
 
 interface IList<T> {
   insertIntoTheHead: (item: T) => void;
   insertIntoTheTail: (item: T) => void;
   removeFromTheHead: () => void;
   removeFromTheTail: () => void;
+  insertByPosition: (position: number, value: T) => void;
+  removeFromPosition: (position: number) => void;
+  iterate: () => void;
   peak: () => T | null;
+  isEmpty: () => boolean;
 }
 
 export class Node<T> {
@@ -22,11 +26,17 @@ export class List<T> implements IList<T> {
   private head: Node<T> | null = null;
   private tail: Node<T> | null = null;
   length: number = 0;
+  private createNodesFromArray(values: T[]) {
+    values.forEach((value) => this.insertIntoTheTail(value));
+  }
 
-  constructor(node: Node<T>) {
-    this.head = node;
-    this.tail = node;
+  constructor(node: T[]) {
+    this.head = null;
+    this.tail = null;
     this.length = 0;
+    if (node?.length) {
+      this.createNodesFromArray(node);
+    }
   }
 
   insertIntoTheHead = (item: T) => {
@@ -111,9 +121,9 @@ export class List<T> implements IList<T> {
     return arr;
   };
 
-  insertInPosition = (position: number, value: T) => {
+  insertByPosition = (position: number, value: T) => {
     if (position < 0 || position > this.length) {
-      return "Incorrect value of position";
+      return;
     }
 
     let node = new Node<T>(value);
@@ -141,13 +151,12 @@ export class List<T> implements IList<T> {
 
   removeFromPosition(position: number) {
     if (position < 0 || position > this.length) {
-      //verification on correct value of position like in the insertInPosition and getNodeByPosition
-      return "Incorrect value of position";
+      return;
     }
 
-    let current = this.head; // now current is the head of the Linked List
+    let current = this.head;
 
-    if ((position === 0) && current) {
+    if (position === 0 && current) {
       this.head = current.next;
     } else {
       let prev = null;
@@ -163,7 +172,6 @@ export class List<T> implements IList<T> {
     }
 
     this.length--;
-    return current!.value;
   }
 
   iterate = (): void => {

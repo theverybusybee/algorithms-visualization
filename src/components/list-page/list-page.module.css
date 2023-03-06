@@ -25,7 +25,7 @@
 
 .circleContainer {
   width: fit-content;
-  margin: 48px auto 0;
+  margin: 90px auto 0;
   max-width: 945px;
   display: flex;
   flex-wrap: wrap;
@@ -37,4 +37,16 @@
   display: flex;
   align-items: center;
   gap: 16px;
+  position: relative;
+}
+
+.circlePointer {
+  position: absolute;
+  top: -65px;
+  left: 12px;
+}
+
+.tailCirclePointer {
+  top: 115px;
+  left: 15px;
 }
