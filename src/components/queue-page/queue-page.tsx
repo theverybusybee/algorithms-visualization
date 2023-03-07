@@ -119,8 +119,10 @@ export const QueuePage: React.FC = () => {
             linkedList="small"
             onClick={removeFromQueue}
             disabled={
-              (activeButton && activeButton !== StackAndQueueButtons.Remove) &&
-              !queueArray.length
+              !inputState ||
+              !queueArray.length ||
+              (activeButton &&
+              activeButton !== StackAndQueueButtons.Remove)
                 ? true
                 : false
             }
@@ -131,8 +133,10 @@ export const QueuePage: React.FC = () => {
             text="Очистить"
             linkedList="small"
             disabled={
-              (activeButton && activeButton !== StackAndQueueButtons.Clear) &&
-              !queueArray.length
+              !inputState ||
+              (activeButton &&
+                activeButton !== StackAndQueueButtons.Clear &&
+                !queueArray.length)
                 ? true
                 : false
             }

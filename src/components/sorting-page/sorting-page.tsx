@@ -33,7 +33,6 @@ export const SortingPage: React.FC = () => {
     radioInputState === SortArrayButtons.BubbleSort
       ? await bubbleSort(arrState, buttonChosen!, setArrState)
       : await selectionSort(arrState, buttonChosen!, setArrState);
-    setArrState([]);
     setActiveButton(null);
   }
 
@@ -71,7 +70,8 @@ export const SortingPage: React.FC = () => {
               name={SortArrayButtons.Ascending}
               isLoader={activeButton === SortArrayButtons.Ascending && true}
               disabled={
-                activeButton && activeButton !== SortArrayButtons.Ascending
+                (activeButton && activeButton !== SortArrayButtons.Ascending) ||
+                !arrState.length
                   ? true
                   : false
               }
@@ -84,7 +84,9 @@ export const SortingPage: React.FC = () => {
               name={SortArrayButtons.Descending}
               isLoader={activeButton === SortArrayButtons.Descending && true}
               disabled={
-                activeButton && activeButton !== SortArrayButtons.Descending
+                (activeButton &&
+                  activeButton !== SortArrayButtons.Descending) ||
+                !arrState.length
                   ? true
                   : false
               }

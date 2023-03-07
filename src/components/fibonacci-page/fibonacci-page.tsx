@@ -1,4 +1,4 @@
-import React, { ChangeEvent, SyntheticEvent, useState } from "react";
+import React, { ChangeEvent, SyntheticEvent, useMemo, useState } from "react";
 import styles from "./fibonacci-page.module.css";
 import { Button } from "../ui/button/button";
 import { Input } from "../ui/input/input";
@@ -8,21 +8,28 @@ import { ITERATION_TIME_FOR_ANIMATION_SHORT } from "../utils/constants";
 import { Circle } from "../ui/circle/circle";
 
 export const FibonacciPage: React.FC = () => {
-  const [inputValueState, setInputValueState] = useState<number>();
+  const [inputValue, setInputValue] = useState<number | null>();
   const [fibonacciSequenceState, setFibonacciSequenceState] = useState<
     number[]
   >([]);
   const [buttonState, setButtonState] = useState<boolean>();
+  const isMetTheConditions = useMemo(() => {
+    if (inputValue) {
+      return inputValue >= 1 && inputValue <= 19 ? true : false;
+    }
+  }, [inputValue]);
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const targetValue = Number(e.currentTarget.value);
-    targetValue >= 1 && targetValue <= 19 && setInputValueState(targetValue);
+    setInputValue(targetValue);
   };
 
   const submit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setFibonacciSequenceState([]);
-    inputValueState && fibonacci(inputValueState);
+    if (inputValue) {
+      isMetTheConditions && inputValue && fibonacci(inputValue);
+    }
+    setInputValue(null);
   };
 
   async function fibonacci(
@@ -63,12 +70,14 @@ export const FibonacciPage: React.FC = () => {
             placeholder="Введите текст"
             onChange={onChange}
             type="number"
+            value={String(inputValue)}
           ></Input>
           <Button
             type="submit"
             text="Развернуть"
             linkedList="small"
             isLoader={buttonState}
+            disabled={inputValue && isMetTheConditions ? false : true}
           ></Button>
         </form>
         <p className={styles.caption}>Максимум — 19 символов</p>

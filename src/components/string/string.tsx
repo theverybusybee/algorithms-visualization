@@ -17,6 +17,7 @@ import { Circle } from "../ui/circle/circle";
 
 export const StringComponent: React.FC = () => {
   const [inputValueState, setInputValueState] = useState<TStringArray>([]);
+  const [inputValue, setInputValue] = useState<string>("");
   const [sortingCharactersState, setSortingCharactersState] = useState<
     TSortingStringArray[]
   >([]);
@@ -25,6 +26,7 @@ export const StringComponent: React.FC = () => {
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const array = e.currentTarget.value.split("");
     setInputValueState(array);
+    setInputValue(e.currentTarget.value);
   };
 
   const submit = (e: SyntheticEvent<HTMLFormElement>) => {
@@ -34,6 +36,7 @@ export const StringComponent: React.FC = () => {
     });
     setSortingCharactersState([...arrForDisplay]);
     sortStringArray(arrForDisplay, setSortingCharactersState);
+    setInputValue("");
   };
 
   const swap = (
@@ -81,12 +84,14 @@ export const StringComponent: React.FC = () => {
             placeholder="Введите текст"
             maxLength={11}
             onChange={onChange}
+            value={inputValue}
           ></Input>
           <Button
             type="submit"
             text="Развернуть"
             linkedList="small"
             isLoader={buttonState}
+            disabled={inputValue ? false : true}
           ></Button>
         </form>
         <p className={styles.caption}>Максимум — 11 символов</p>
