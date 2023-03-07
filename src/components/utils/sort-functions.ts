@@ -1,7 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { ElementStates } from "../../types/element-states";
 import {
-  ITERATION_TIME_FOR_ANIMATION_LONG,
   ITERATION_TIME_FOR_ANIMATION_SHORT,
 } from "./constants";
 import { TSortingNumberArray } from "./types";
@@ -55,7 +54,7 @@ export async function bubbleSort(
           arr[j].type = ElementStates.Changing;
           arr[j + 1].type = ElementStates.Changing;
           setSortingNumbersState([...arr]);
-          await setDelayForAnimation(ITERATION_TIME_FOR_ANIMATION_LONG);
+          await setDelayForAnimation(ITERATION_TIME_FOR_ANIMATION_SHORT);
           if (arr[j].value > arr[j + 1].value) {
             [arr[j].value, arr[j + 1].value] = [arr[j + 1].value, arr[j].value];
           }
@@ -74,7 +73,7 @@ export async function bubbleSort(
           arr[j].type = ElementStates.Changing;
           arr[j + 1].type = ElementStates.Changing;
           setSortingNumbersState([...arr]);
-          await setDelayForAnimation(ITERATION_TIME_FOR_ANIMATION_LONG);
+          await setDelayForAnimation(ITERATION_TIME_FOR_ANIMATION_SHORT);
           if (arr[j].value < arr[j + 1].value) {
             [arr[j].value, arr[j + 1].value] = [arr[j + 1].value, arr[j].value];
           }
@@ -126,7 +125,7 @@ export async function selectionSort(
           arr[j].type = ElementStates.Changing;
           setSortingNumbersState([...arr]);
           await setDelayForAnimation(ITERATION_TIME_FOR_ANIMATION_SHORT);
-          if (arr[j] > arr[min]) {
+          if (arr[j].value > arr[min].value) {
             min = j;
           }
           arr[j].type = ElementStates.Default;

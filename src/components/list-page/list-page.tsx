@@ -11,6 +11,7 @@ import { generateNumber } from "../utils/sort-functions";
 import { ElementStates } from "../../types/element-states";
 import { setDelayForAnimation } from "../utils/utils";
 import { ITERATION_TIME_FOR_ANIMATION_LONG } from "../utils/constants";
+import { LinkedListButtons } from "../../types/buttons";
 
 type TElementPointer = {
   value: string;
@@ -19,11 +20,14 @@ type TElementPointer = {
 
 export const ListPage: React.FC = () => {
   const [inputState, setInputState] = useState<string>("");
-  const [indexInputState, setIndexInputState] = useState<string>();
+  const [indexInputState, setIndexInputState] = useState<number>(0);
   const [arrayFromLinkedList, setArrayFromLinkedList] = useState<
     TSortingArray[]
   >([]);
   const [elementPointer, setElementPointer] = useState<TElementPointer | null>(
+    null
+  );
+  const [activeButton, setActiveButton] = useState<LinkedListButtons | null>(
     null
   );
 
@@ -43,9 +47,11 @@ export const ListPage: React.FC = () => {
     setArrayFromLinkedList(list.getArrayFromLinkedList());
   }, []);
 
+  console.log(arrayFromLinkedList)
+
   const setEmptyInput = () => {
     inputState && setInputState("");
-    indexInputState && setIndexInputState("");
+    indexInputState && setIndexInputState(0);
   };
 
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,7 +61,7 @@ export const ListPage: React.FC = () => {
 
   const onIndexInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.currentTarget.value;
-    setIndexInputState(inputValue);
+    setIndexInputState(Number(inputValue));
   };
 
   const setElementTypeChanging = (
@@ -87,6 +93,7 @@ export const ListPage: React.FC = () => {
 
   async function addNodeToTheBeginning(value: string) {
     if (value) {
+      setActiveButton(LinkedListButtons.AddToHead);
       setEmptyInput();
       setElementPointer({
         value: value,
@@ -107,11 +114,13 @@ export const ListPage: React.FC = () => {
         ElementStates.Default,
         0
       );
+      setActiveButton(null);
     }
   }
 
   async function addNodeToTheEnd(value: string) {
     if (value) {
+      setActiveButton(LinkedListButtons.AddToEnd);
       setEmptyInput();
       setElementPointer({
         value: value,
@@ -132,10 +141,12 @@ export const ListPage: React.FC = () => {
         ElementStates.Default,
         arrayFromLinkedList.length
       );
+      setActiveButton(null);
     }
   }
 
   async function deleteNodeFromTheHead() {
+    setActiveButton(LinkedListButtons.RemoveFromHead);
     setPointerPosition(0);
     makeEmptyCircle(0);
     await setDelayForAnimation(ITERATION_TIME_FOR_ANIMATION_LONG);
@@ -143,64 +154,74 @@ export const ListPage: React.FC = () => {
     setElementPointer(null);
     list.removeFromTheHead();
     setArrayFromLinkedList(list.getArrayFromLinkedList());
+    setActiveButton(null);
   }
 
   async function deleteNodeFromTheEnd() {
+    setActiveButton(LinkedListButtons.RemoveFromEnd);
     setPointerPosition(arrayFromLinkedList.length - 1);
     makeEmptyCircle(arrayFromLinkedList.length - 1);
     await setDelayForAnimation(ITERATION_TIME_FOR_ANIMATION_LONG);
     setElementPointer(null);
     list.removeFromTheTail();
     setArrayFromLinkedList(list.getArrayFromLinkedList());
+    setActiveButton(null);
   }
 
-  async function step(
+  async function changeColorStepByStep(index: number, isPointer: boolean) {
+    for (let i = 0; i <= index; i++) {
+      isPointer && setPointerPosition(i);
+      if (i < index) {
+        await setDelayForAnimation(ITERATION_TIME_FOR_ANIMATION_LONG);
+        changeColor(arrayFromLinkedList, i, ElementStates.Changing);
+      }
+    }
+  }
+
+  async function changeColor(
     arr: TSortingArray[],
     index: number,
-    i = 0
-  ): Promise<TSortingArray[]> {
-    const initialArr = arr;
-    if (i < index) {
-      initialArr.map((element, elementIndex) =>
-        elementIndex === i
-          ? { ...element, type: ElementStates.Changing }
-          : { ...element }
-      );
-      i++;
-      setArrayFromLinkedList(initialArr);
-      await setDelayForAnimation(ITERATION_TIME_FOR_ANIMATION_LONG);
-      return step(initialArr, index, i);
-    }
-    return arr
+    type: ElementStates
+  ) {
+    const newArr = arr;
+    newArr[index].type = type;
+    setArrayFromLinkedList([...newArr]);
   }
 
   async function insertByIndex(index: number, content: string) {
     if (inputState && indexInputState) {
-      step(arrayFromLinkedList, index);
-      setElementTypeChanging(arrayFromLinkedList, ElementStates.Changing, 2)
-      console.log(arrayFromLinkedList)
-      await setDelayForAnimation(ITERATION_TIME_FOR_ANIMATION_LONG);
-      
-      // await setDelayForAnimation(ITERATION_TIME_FOR_ANIMATION_LONG);
-      // list.insertByPosition(index, content);
-      // setArrayFromLinkedList(list.getArrayFromLinkedList());
-      console.log(arrayFromLinkedList);
+      setActiveButton(LinkedListButtons.InsertByIndex);
       setEmptyInput();
+      await changeColorStepByStep(index, true);
+      await setDelayForAnimation(ITERATION_TIME_FOR_ANIMATION_LONG);
+      setElementPointer(null);
+      list.insertByPosition(index, content);
+      setArrayFromLinkedList(list.getArrayFromLinkedList());
+      changeColor(list.getArrayFromLinkedList(), index, ElementStates.Modified);
+      await setDelayForAnimation(ITERATION_TIME_FOR_ANIMATION_LONG);
+      changeColor(list.getArrayFromLinkedList(), index, ElementStates.Default);
+      setActiveButton(null);
     }
   }
-console.log(arrayFromLinkedList);
   async function removeByIndex(index: number) {
-    if (!inputState && indexInputState) {
-      setElementTypeChanging(arrayFromLinkedList, ElementStates.Changing, 1)
+    if (indexInputState) {
+      setActiveButton(LinkedListButtons.ExtractByIndex);
+      setEmptyInput();
+      await changeColorStepByStep(index, false);
+
       await setDelayForAnimation(ITERATION_TIME_FOR_ANIMATION_LONG);
-      setElementTypeChanging(arrayFromLinkedList, ElementStates.Changing, 2)
+      makeEmptyCircle(index);
       await setDelayForAnimation(ITERATION_TIME_FOR_ANIMATION_LONG);
+
+      setPointerPosition(index);
+      await setDelayForAnimation(ITERATION_TIME_FOR_ANIMATION_LONG);
+      setElementPointer(null);
       list.removeFromPosition(index);
       setArrayFromLinkedList(list.getArrayFromLinkedList());
-      setEmptyInput();
+      setActiveButton(null);
     }
   }
-
+  
   return (
     <SolutionLayout title="Связный список">
       <div className={styles.stack}>
@@ -218,24 +239,55 @@ console.log(arrayFromLinkedList);
             linkedList="small"
             type="button"
             onClick={() => addNodeToTheBeginning(inputState)}
+            disabled={
+              !inputState ||
+              !arrayFromLinkedList.length ||
+              (activeButton && activeButton !== LinkedListButtons.AddToHead)
+                ? true
+                : false
+            }
+            isLoader={activeButton === LinkedListButtons.AddToHead && true}
           ></Button>
           <Button
             extraClass={styles.button}
             text="Добавить в tail"
             linkedList="small"
             onClick={() => addNodeToTheEnd(inputState)}
+            disabled={
+              !inputState ||
+              !arrayFromLinkedList.length ||
+              (activeButton && activeButton !== LinkedListButtons.AddToEnd)
+                ? true
+                : false
+            }
+            isLoader={activeButton === LinkedListButtons.AddToEnd && true}
           ></Button>
           <Button
             extraClass={styles.button}
             text="Удалить из head"
             linkedList="small"
             onClick={deleteNodeFromTheHead}
+            disabled={
+              !arrayFromLinkedList.length ||
+              (activeButton &&
+                activeButton !== LinkedListButtons.RemoveFromHead)
+                ? true
+                : false
+            }
+            isLoader={activeButton === LinkedListButtons.RemoveFromHead && true}
           ></Button>
           <Button
             extraClass={styles.button}
             text="Удалить из tail"
             linkedList="small"
             onClick={deleteNodeFromTheEnd}
+            disabled={
+              !arrayFromLinkedList.length ||
+              (activeButton && activeButton !== LinkedListButtons.RemoveFromEnd)
+                ? true
+                : false
+            }
+            isLoader={activeButton === LinkedListButtons.RemoveFromEnd && true}
           ></Button>
         </div>
         <p className={styles.caption}>Максимум — 4 символа</p>
@@ -247,17 +299,36 @@ console.log(arrayFromLinkedList);
             placeholder="Введите индекс"
             onChange={onIndexInputChange}
             type="number"
+            min={1}
+            max={3}
           />
           <Button
             extraClass={styles.button}
             text="Добавить по индексу"
             type="button"
             onClick={() => insertByIndex(Number(indexInputState), inputState)}
+            disabled={
+              
+              (!inputState || !indexInputState) ||
+              !arrayFromLinkedList.length ||
+              (activeButton && activeButton !== LinkedListButtons.InsertByIndex)
+                ? true
+                : false
+            }
+            isLoader={activeButton === LinkedListButtons.InsertByIndex && true}
           ></Button>
           <Button
             extraClass={styles.button}
             text="Удалить по индексу"
             onClick={() => removeByIndex(Number(indexInputState))}
+            disabled={ !indexInputState ||
+              !arrayFromLinkedList.length ||
+              (activeButton &&
+                activeButton !== LinkedListButtons.ExtractByIndex)
+                ? true
+                : false
+            }
+            isLoader={activeButton === LinkedListButtons.ExtractByIndex && true}
           ></Button>
         </form>
         <div className={styles.circleContainer}>

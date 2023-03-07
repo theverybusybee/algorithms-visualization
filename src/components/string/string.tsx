@@ -20,6 +20,7 @@ export const StringComponent: React.FC = () => {
   const [sortingCharactersState, setSortingCharactersState] = useState<
     TSortingStringArray[]
   >([]);
+  const [buttonState, setButtonState] = useState<boolean>(false);
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const array = e.currentTarget.value.split("");
@@ -50,6 +51,7 @@ export const StringComponent: React.FC = () => {
     arr: TSortingStringArray[],
     setSortingCharactersState: Dispatch<SetStateAction<TSortingStringArray[]>>
   ) {
+    setButtonState(true);
     const mid = Math.floor((arr.length - 1) / 2);
     for (
       let firstPointerIndex = 0;
@@ -68,6 +70,7 @@ export const StringComponent: React.FC = () => {
       arr[secondPointerIndex].type = ElementStates.Modified;
       setSortingCharactersState([...arr]);
     }
+    setButtonState(false);
   }
 
   return (
@@ -79,7 +82,12 @@ export const StringComponent: React.FC = () => {
             maxLength={11}
             onChange={onChange}
           ></Input>
-          <Button type="submit" text="Развернуть" linkedList="small"></Button>
+          <Button
+            type="submit"
+            text="Развернуть"
+            linkedList="small"
+            isLoader={buttonState}
+          ></Button>
         </form>
         <p className={styles.caption}>Максимум — 11 символов</p>
       </div>

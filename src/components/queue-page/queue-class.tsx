@@ -1,5 +1,3 @@
-import { ElementStates } from "../../types/element-states";
-
 interface IQueue<T> {
   enqueue: (item: T) => void;
   dequeue: () => void;
@@ -68,6 +66,13 @@ export class Queue<T> implements IQueue<T> {
    getHead = () => {
     return this.head;
   };
+
+  clear = () => {
+    this.container = [];
+    this.head = 0;
+    this.tail = 0;
+    this.length = 0;
+  }
 
   isEmpty = () => this.length === 0;
 }

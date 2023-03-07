@@ -1,4 +1,4 @@
-import React, { ChangeEvent, MutableRefObject, RefObject, useRef, useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import styles from "./sorting-page.module.css";
 import { Button } from "../ui/button/button";
 import { Column } from "../ui/column/column";
@@ -7,29 +7,40 @@ import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import { Direction } from "../../types/direction";
 import { randomArr, bubbleSort, selectionSort } from "../utils/sort-functions";
 import { TSortingNumberArray } from "../utils/types";
+import { SortArrayButtons } from "../../types/buttons";
+import { setDelayForAnimation } from "../utils/utils";
+import { ITERATION_TIME_FOR_ANIMATION_SHORT } from "../utils/constants";
 
 export const SortingPage: React.FC = () => {
-  const [radioInputState, setRadioInputState] = useState<string>("selectionSort");
-  const [directionState, setDirectionState] = useState<string>("");
+  const [radioInputState, setRadioInputState] =
+    useState<string>("selectionSort");
   const [arrState, setArrState] = useState<TSortingNumberArray[]>([]);
-console.log(arrState)
+  const [activeButton, setActiveButton] = useState<SortArrayButtons | null>(
+    null
+  );
 
   const setSortingKind = (e: ChangeEvent<HTMLInputElement>) => {
     setRadioInputState(e.currentTarget.value);
   };
 
-  const setSortingDirection = (e: React.SyntheticEvent) => {
+  async function setSortingDirection(e: React.SyntheticEvent) {
     const buttonChosen = e.currentTarget.getAttribute("name");
-    buttonChosen && setDirectionState(buttonChosen);
-    radioInputState === "bubbleSort"
-      ? bubbleSort(arrState, buttonChosen!, setArrState)
-      : selectionSort(arrState, buttonChosen!, setArrState);
-  };
+    setDelayForAnimation(ITERATION_TIME_FOR_ANIMATION_SHORT);
+    buttonChosen === SortArrayButtons.Ascending
+      ? setActiveButton(SortArrayButtons.Ascending)
+      : setActiveButton(SortArrayButtons.Descending);
 
-  const test = () => {
+    radioInputState === SortArrayButtons.BubbleSort
+      ? await bubbleSort(arrState, buttonChosen!, setArrState)
+      : await selectionSort(arrState, buttonChosen!, setArrState);
+    setArrState([]);
+    setActiveButton(null);
+  }
+
+  const setRandomArray = () => {
     setArrState(randomArr(3, 17));
   };
-
+  console.log(activeButton);
   return (
     <SolutionLayout title="Сортировка массива">
       <form className={styles.container}>
@@ -40,6 +51,7 @@ console.log(arrState)
               name="sortKind"
               value="bubbleSort"
               label="Пузырёк"
+              disabled={activeButton ? true : false}
             />
             <RadioInput
               onInput={setSortingKind}
@@ -47,6 +59,7 @@ console.log(arrState)
               value="selectionSort"
               label="Выбор"
               defaultChecked
+              disabled={activeButton ? true : false}
             />
           </div>
           <div className={styles.buttonsContainer}>
@@ -55,26 +68,39 @@ console.log(arrState)
               sorting={Direction.Ascending}
               text="По возрастанию"
               onClick={setSortingDirection}
-              name={Direction.Ascending}
+              name={SortArrayButtons.Ascending}
+              isLoader={activeButton === SortArrayButtons.Ascending && true}
+              disabled={
+                activeButton && activeButton !== SortArrayButtons.Ascending
+                  ? true
+                  : false
+              }
             />
             <Button
               extraClass={styles.button}
               sorting={Direction.Descending}
               text="По убыванию"
               onClick={setSortingDirection}
-              name={Direction.Descending}
+              name={SortArrayButtons.Descending}
+              isLoader={activeButton === SortArrayButtons.Descending && true}
+              disabled={
+                activeButton && activeButton !== SortArrayButtons.Descending
+                  ? true
+                  : false
+              }
             />
             <Button
               extraClass={styles.button}
               text="Новый массив"
-              onClick={test}
+              onClick={setRandomArray}
+              disabled={activeButton ? true : false}
             />
           </div>
         </div>
         <div className={styles.chartContainer}>
           {arrState &&
             arrState.map((el, index) => {
-              return <Column index={el.value} key={index} state={el.type}/>;
+              return <Column index={el.value} key={index} state={el.type} />;
             })}
         </div>
       </form>

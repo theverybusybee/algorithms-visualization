@@ -9,11 +9,15 @@ import { Circle } from "../ui/circle/circle";
 import { ITERATION_TIME_FOR_ANIMATION_SHORT } from "../utils/constants";
 import { setDelayForAnimation } from "../utils/utils";
 import { TSortingStringArray } from "../utils/types";
+import { StackAndQueueButtons } from "../../types/buttons";
 
 export const StackPage: React.FC = () => {
   const [inputState, setInputState] = useState("");
   const [stackArrState, setStackArrState] = useState<TSortingStringArray[]>([]);
   const [stack] = useState(new Stack<TSortingStringArray>());
+  const [activeButton, setActiveButton] = useState<StackAndQueueButtons | null>(
+    null
+  );
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputState(e.currentTarget.value);
@@ -22,26 +26,37 @@ export const StackPage: React.FC = () => {
   async function pushElement(e: SyntheticEvent<HTMLFormElement>) {
     e.preventDefault();
     if (inputState) {
+      setInputState("");
+      setActiveButton(StackAndQueueButtons.Add);
       stack.push({ value: inputState, type: ElementStates.Changing });
       setInputState("");
       setStackArrState([...stack.getContent()]);
       await setDelayForAnimation(ITERATION_TIME_FOR_ANIMATION_SHORT);
       stack.peak().type = ElementStates.Default;
       setStackArrState([...stack.getContent()]);
+      setActiveButton(null);
     }
   }
 
   async function popElement() {
-    stack.peak().type = ElementStates.Changing;
-    setStackArrState([...stack.getContent()]);
-    await setDelayForAnimation(ITERATION_TIME_FOR_ANIMATION_SHORT);
-    stack.pop();
-    setStackArrState([...stack.getContent()]);
+    if (stackArrState.length) {
+      setActiveButton(StackAndQueueButtons.Remove);
+      stack.peak().type = ElementStates.Changing;
+      setStackArrState([...stack.getContent()]);
+      await setDelayForAnimation(ITERATION_TIME_FOR_ANIMATION_SHORT);
+      stack.pop();
+      setStackArrState([...stack.getContent()]);
+      setActiveButton(null);
+    }
   }
 
   const clearStack = () => {
-    stack.clear();
-    setStackArrState([...stack.getContent()]);
+    if (stackArrState.length) {
+      setActiveButton(StackAndQueueButtons.Clear);
+      stack.clear();
+      setStackArrState([...stack.getContent()]);
+      setActiveButton(null);
+    }
   };
 
   const isTop = (arr: TSortingStringArray[], index: number): string => {
@@ -64,18 +79,40 @@ export const StackPage: React.FC = () => {
             text="Добавить"
             linkedList="small"
             type="submit"
+             disabled={
+              !inputState &&
+              (!stackArrState.length ||
+              (activeButton && activeButton !== StackAndQueueButtons.Add))
+                ? true
+                : false
+            }
+            isLoader={activeButton === StackAndQueueButtons.Add && true}
           ></Button>
           <Button
             extraClass={styles.button}
             text="Удалить"
             linkedList="small"
             onClick={popElement}
+            disabled={
+              (activeButton && activeButton !== StackAndQueueButtons.Remove) ||
+              !stackArrState.length
+                ? true
+                : false
+            }
+            isLoader={activeButton === StackAndQueueButtons.Remove && true}
           ></Button>
           <Button
             extraClass={styles.button}
             text="Очистить"
             linkedList="small"
             onClick={clearStack}
+            disabled={
+              (activeButton && activeButton !== StackAndQueueButtons.Clear) ||
+              !stackArrState.length
+                ? true
+                : false
+            }
+            isLoader={activeButton === StackAndQueueButtons.Clear && true}
           ></Button>
         </form>
         <p className={styles.caption}>Максимум — 4 символа</p>
@@ -98,4 +135,3 @@ export const StackPage: React.FC = () => {
     </SolutionLayout>
   );
 };
-
