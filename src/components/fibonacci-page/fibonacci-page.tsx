@@ -4,7 +4,7 @@ import { Button } from "../ui/button/button";
 import { Input } from "../ui/input/input";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import { setDelayForAnimation } from "../utils/utils";
-import { ITERATION_TIME_FOR_ANIMATION_LONG, ITERATION_TIME_FOR_ANIMATION_SHORT } from "../utils/constants";
+import { ITERATION_TIME_FOR_ANIMATION_SHORT } from "../utils/constants";
 import { Circle } from "../ui/circle/circle";
 
 export const FibonacciPage: React.FC = () => {
@@ -12,6 +12,7 @@ export const FibonacciPage: React.FC = () => {
   const [fibonacciSequenceState, setFibonacciSequenceState] = useState<
     number[]
   >([]);
+  const [buttonState, setButtonState] = useState<boolean>();
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const targetValue = Number(e.currentTarget.value);
@@ -31,6 +32,7 @@ export const FibonacciPage: React.FC = () => {
     F1 = 0,
     F2 = 1
   ): Promise<number[]> {
+    setButtonState(true);
     if (number <= startNumber + 1) {
       if (number === 1) {
         setFibonacciSequenceState([arr[0]]);
@@ -47,6 +49,7 @@ export const FibonacciPage: React.FC = () => {
       await setDelayForAnimation(ITERATION_TIME_FOR_ANIMATION_SHORT);
       return fibonacci(startNumber, arr, number, F1, F2);
     }
+    setButtonState(false);
     return arr;
   }
 
@@ -61,7 +64,12 @@ export const FibonacciPage: React.FC = () => {
             onChange={onChange}
             type="number"
           ></Input>
-          <Button type="submit" text="Развернуть" linkedList="small"></Button>
+          <Button
+            type="submit"
+            text="Развернуть"
+            linkedList="small"
+            isLoader={buttonState}
+          ></Button>
         </form>
         <p className={styles.caption}>Максимум — 19 символов</p>
       </div>
