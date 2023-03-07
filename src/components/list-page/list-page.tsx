@@ -20,16 +20,27 @@ type TElementPointer = {
 
 export const ListPage: React.FC = () => {
   const [inputState, setInputState] = useState<string>("");
-  const [indexInputState, setIndexInputState] = useState<number>(0);
+  const [indexInputState, setIndexInputState] = useState<string>('');
   const [arrayFromLinkedList, setArrayFromLinkedList] = useState<
     TSortingArray[]
   >([]);
+  console.log(indexInputState)
   const [elementPointer, setElementPointer] = useState<TElementPointer | null>(
     null
   );
   const [activeButton, setActiveButton] = useState<LinkedListButtons | null>(
     null
   );
+
+  const isIndexMetTheConditions = useMemo(() => {
+    if (indexInputState) {
+      return (arrayFromLinkedList.length &&
+        (Number(indexInputState) === 0 || Number(indexInputState) < arrayFromLinkedList.length)
+        ? true
+        : false);
+    }
+  }, [indexInputState, arrayFromLinkedList.length]);
+console.log(isIndexMetTheConditions)
 
   const createArr = () => {
     const arr: string[] = [];
@@ -47,11 +58,10 @@ export const ListPage: React.FC = () => {
     setArrayFromLinkedList(list.getArrayFromLinkedList());
   }, []);
 
-  console.log(arrayFromLinkedList)
 
   const setEmptyInput = () => {
     inputState && setInputState("");
-    indexInputState && setIndexInputState(0);
+    indexInputState && setIndexInputState('');
   };
 
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,7 +71,7 @@ export const ListPage: React.FC = () => {
 
   const onIndexInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.currentTarget.value;
-    setIndexInputState(Number(inputValue));
+    setIndexInputState(inputValue);
   };
 
   const setElementTypeChanging = (
@@ -221,7 +231,7 @@ export const ListPage: React.FC = () => {
       setActiveButton(null);
     }
   }
-  
+
   return (
     <SolutionLayout title="Связный список">
       <div className={styles.stack}>
@@ -308,8 +318,8 @@ export const ListPage: React.FC = () => {
             type="button"
             onClick={() => insertByIndex(Number(indexInputState), inputState)}
             disabled={
-              
-              (!inputState || !indexInputState) ||
+              !inputState ||
+              !indexInputState ||
               !arrayFromLinkedList.length ||
               (activeButton && activeButton !== LinkedListButtons.InsertByIndex)
                 ? true
@@ -321,8 +331,8 @@ export const ListPage: React.FC = () => {
             extraClass={styles.button}
             text="Удалить по индексу"
             onClick={() => removeByIndex(Number(indexInputState))}
-            disabled={ !indexInputState ||
-              !arrayFromLinkedList.length ||
+            disabled={
+              !isIndexMetTheConditions ||
               (activeButton &&
                 activeButton !== LinkedListButtons.ExtractByIndex)
                 ? true
