@@ -1,0 +1,36 @@
+.stack {
+  max-width: 829px;
+  margin: 0 auto;
+}
+
+.stackContainer {
+  display: flex;
+  gap: 12px;
+}
+
+.input {
+  max-width: 377px;
+}
+
+.button {
+  width: fit-content;
+}
+
+.button:last-of-type {
+  margin-left: auto;
+}
+
+.caption {
+  text-align: start;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.circleContainer {
+  width: fit-content;
+  margin: 48px auto 0;
+  max-width: 945px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
