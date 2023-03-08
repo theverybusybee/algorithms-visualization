@@ -39,7 +39,7 @@ export const SortingPage: React.FC = () => {
   const setRandomArray = () => {
     setArrState(randomArr(3, 17));
   };
-  console.log(activeButton);
+
   return (
     <SolutionLayout title="Сортировка массива">
       <form className={styles.container}>

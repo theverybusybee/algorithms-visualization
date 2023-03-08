@@ -119,7 +119,6 @@ export const StackPage: React.FC = () => {
         <div className={styles.circleContainer}>
           {stackArrState &&
             stackArrState.map((el, index) => {
-              console.log(index);
               return (
                 <Circle
                   letter={el.value}

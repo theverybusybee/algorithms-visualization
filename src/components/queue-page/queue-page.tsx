@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import styles from "./queue-page.module.css";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import { Input } from "../ui/input/input";
@@ -25,6 +25,10 @@ export const QueuePage: React.FC = () => {
     value: "",
     type: ElementStates.Default,
   });
+
+  const isQueueEmpty = useMemo(() => {
+    return queueArray.every((el) => el!.value === "");
+  }, [queueArray]);
 
   useEffect(() => {
     setQueueArray(emptyArr);
@@ -59,7 +63,7 @@ export const QueuePage: React.FC = () => {
   }
 
   async function removeFromQueue() {
-    if (queueArray.length) {
+    if (!isQueueEmpty) {
       setActiveButton(StackAndQueueButtons.Remove);
       queueArray[queue.getHead()] = {
         value: "",
@@ -70,7 +74,7 @@ export const QueuePage: React.FC = () => {
       setQueue(queue);
       await setDelayForAnimation(ITERATION_TIME_FOR_ANIMATION_LONG);
       queueArray[queue.getHead() - 1] = {
-        value: inputState,
+        value: '',
         type: ElementStates.Default,
       };
 
@@ -119,10 +123,9 @@ export const QueuePage: React.FC = () => {
             linkedList="small"
             onClick={removeFromQueue}
             disabled={
-              !inputState ||
+              isQueueEmpty ||
               !queueArray.length ||
-              (activeButton &&
-              activeButton !== StackAndQueueButtons.Remove)
+              (activeButton && activeButton !== StackAndQueueButtons.Remove)
                 ? true
                 : false
             }
@@ -133,7 +136,7 @@ export const QueuePage: React.FC = () => {
             text="Очистить"
             linkedList="small"
             disabled={
-              !inputState ||
+              isQueueEmpty ||
               (activeButton &&
                 activeButton !== StackAndQueueButtons.Clear &&
                 !queueArray.length)
@@ -147,8 +150,6 @@ export const QueuePage: React.FC = () => {
         <div className={styles.circleContainer}>
           {queueArray &&
             queueArray.map((el, index) => {
-              console.log(queue.getTail());
-              console.log(queueArray.length);
               return (
                 <Circle
                   letter={el!.value}

@@ -24,7 +24,6 @@ export const ListPage: React.FC = () => {
   const [arrayFromLinkedList, setArrayFromLinkedList] = useState<
     TSortingArray[]
   >([]);
-  console.log(indexInputState)
   const [elementPointer, setElementPointer] = useState<TElementPointer | null>(
     null
   );

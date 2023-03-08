@@ -178,7 +178,6 @@ export class List<T> implements IList<T> {
     let currentNode = this.head;
 
     while (currentNode) {
-      console.log(currentNode);
       currentNode = currentNode.next;
     }
   };
