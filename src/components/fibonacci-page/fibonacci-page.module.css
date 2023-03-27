@@ -1,0 +1,29 @@
+.stringContainer {
+  max-width: 522px;
+  margin: 0 auto;
+}
+
+.inputContainer {
+  display: flex;
+  gap: 12px;
+}
+
+.caption {
+  text-align: start;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.circlesContainer {
+  width: fit-content;
+  margin: 48px auto 0;
+  max-width: 945px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.sequenceIndex {
+  display: inline-block;
+  padding-top: 8px;
+}
