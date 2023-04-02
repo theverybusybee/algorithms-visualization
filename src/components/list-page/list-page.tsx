@@ -39,7 +39,6 @@ export const ListPage: React.FC = () => {
         : false);
     }
   }, [indexInputState, arrayFromLinkedList.length]);
-console.log(isIndexMetTheConditions)
 
   const createArr = () => {
     const arr: string[] = [];
@@ -342,7 +341,7 @@ console.log(isIndexMetTheConditions)
         </form>
         <div className={styles.circleContainer}>
           {arrayFromLinkedList &&
-            arrayFromLinkedList.map((el, index) => {
+            arrayFromLinkedList.map((el, index) => { 
               if (index === 0 && elementPointer?.index === index) {
                 return (
                   <div className={styles.circle} key={index}>

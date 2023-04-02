@@ -1,8 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { ElementStates } from "../../types/element-states";
-import {
-  ITERATION_TIME_FOR_ANIMATION_SHORT,
-} from "./constants";
+import { ITERATION_TIME_FOR_ANIMATION_SHORT } from "./constants";
 import { TSortingNumberArray } from "./types";
 import { setDelayForAnimation } from "./utils";
 
@@ -13,19 +11,26 @@ export const generateNumber = (minLen: number, maxLen: number) => {
   return randomNumber;
 };
 
+export const toSortingNumberArray = (arr: number[]) => {
+  return arr.map((value) => ({
+    value: Number(value),
+    type: ElementStates.Default,
+  }));
+};
+
 // генерируем массив
-export const randomArr = (
+export const getRandomArr = (
   minArrLen: number,
   maxArrLen: number,
   i = 0,
-  arr: TSortingNumberArray[] = [],
+  arr: number[] = [],
   arrLength = generateNumber(minArrLen, maxArrLen)
-): TSortingNumberArray[] => {
+): number[] => {
   if (i < arrLength) {
     const number = generateNumber(0, 100);
-    number && arr.push({ value: number, type: ElementStates.Default });
+    number && arr.push(number);
     i++;
-    return randomArr(minArrLen, maxArrLen, i, arr, arrLength);
+    return getRandomArr(minArrLen, maxArrLen, i, arr, arrLength);
   }
   return arr;
 };
@@ -42,11 +47,13 @@ const swap = (
 
 // сортировка пузырьком
 export async function bubbleSort(
-  arr: TSortingNumberArray[],
+  numberArr: number[],
   isInAscendingOrder: string,
   setSortingNumbersState: Dispatch<SetStateAction<TSortingNumberArray[]>>
 ) {
+  const arr = toSortingNumberArray(numberArr);
   const { length } = arr;
+  if (!length) return;
   switch (isInAscendingOrder) {
     case "ascending": {
       for (let i = 0; i < length; i++) {
@@ -89,10 +96,11 @@ export async function bubbleSort(
 
 // сортировка выбором
 export async function selectionSort(
-  arr: TSortingNumberArray[],
+  numberArr: number[],
   isInAscendingOrder: string,
   setSortingNumbersState: Dispatch<SetStateAction<TSortingNumberArray[]>>
 ) {
+  const arr = toSortingNumberArray(numberArr);
   const { length } = arr;
   switch (isInAscendingOrder) {
     case "ascending": {
