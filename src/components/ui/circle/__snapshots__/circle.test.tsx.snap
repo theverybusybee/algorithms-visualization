@@ -2,7 +2,8 @@
 
 exports[`Circle component testing events Circle contains letter 1`] = `
 <div
-  className="content "
+  className="content  "
+  data-testid="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head element"
@@ -27,13 +28,15 @@ exports[`Circle component testing events Circle contains letter 1`] = `
 
 exports[`Circle component testing events Circle has another component in its head attribute 1`] = `
 <div
-  className="content "
+  className="content  "
+  data-testid="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head element"
   >
     <div
-      className="content "
+      className="content  "
+      data-testid="circle"
     >
       <div
         className="text text_type_input text_color_input mb-4 absolute head element"
@@ -71,7 +74,8 @@ exports[`Circle component testing events Circle has another component in its hea
 
 exports[`Circle component testing events Circle has another component in its tail attribute 1`] = `
 <div
-  className="content "
+  className="content  "
+  data-testid="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head element"
@@ -90,7 +94,8 @@ exports[`Circle component testing events Circle has another component in its tai
     className="text text_type_input text_color_input mt-4 absolute tail30 element"
   >
     <div
-      className="content "
+      className="content  "
+      data-testid="circle"
     >
       <div
         className="text text_type_input text_color_input mb-4 absolute head element"
@@ -115,7 +120,8 @@ exports[`Circle component testing events Circle has another component in its tai
 
 exports[`Circle component testing events Circle has head 1`] = `
 <div
-  className="content "
+  className="content  "
+  data-testid="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head string"
@@ -140,7 +146,8 @@ exports[`Circle component testing events Circle has head 1`] = `
 
 exports[`Circle component testing events Circle has tail 1`] = `
 <div
-  className="content "
+  className="content  "
+  data-testid="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head element"
@@ -165,7 +172,8 @@ exports[`Circle component testing events Circle has tail 1`] = `
 
 exports[`Circle component testing events Circle has visible index 1`] = `
 <div
-  className="content "
+  className="content  "
+  data-testid="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head element"
@@ -190,7 +198,8 @@ exports[`Circle component testing events Circle has visible index 1`] = `
 
 exports[`Circle component testing events Circle is empty 1`] = `
 <div
-  className="content "
+  className="content  "
+  data-testid="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head element"
@@ -213,7 +222,8 @@ exports[`Circle component testing events Circle is empty 1`] = `
 
 exports[`Circle component testing events Circle is in changing state 1`] = `
 <div
-  className="content "
+  className="content  "
+  data-testid="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head element"
@@ -236,7 +246,8 @@ exports[`Circle component testing events Circle is in changing state 1`] = `
 
 exports[`Circle component testing events Circle is in default state 1`] = `
 <div
-  className="content "
+  className="content  "
+  data-testid="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head element"
@@ -259,7 +270,8 @@ exports[`Circle component testing events Circle is in default state 1`] = `
 
 exports[`Circle component testing events Circle is in modified state 1`] = `
 <div
-  className="content "
+  className="content  "
+  data-testid="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head element"
@@ -282,7 +294,8 @@ exports[`Circle component testing events Circle is in modified state 1`] = `
 
 exports[`Circle component testing events Circle is small 1`] = `
 <div
-  className="content "
+  className="content  "
+  data-testid="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 absolute head element"

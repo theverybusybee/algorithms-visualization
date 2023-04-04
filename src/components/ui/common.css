@@ -8,7 +8,7 @@
   --text-color-secondary: #fff;
 
   --text-color-h1: #141414;
-  --text-color-black: #000;
+  --text-color-black: #000000;
   --text-color-input: #3d3d3d;
   --text-input-placeholder: #7a7a7a;
 
@@ -22,7 +22,7 @@
 
   --default-color: #0032ff;
   --changing-color: #d252e1;
-  --modified-color: #7fe051;
+  --modified-color: rgb(127, 224, 81);
 
   --common-transition: all 0.3s ease-in;
 }
@@ -41,7 +41,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   padding: 0;
   margin: 0;
-  color: var(--text-color-primary);
+  /* color: var(--text-color-primary); */
   background: var(--background);
 }
 
@@ -53,7 +53,7 @@ body {
 }
 
 .text_color_primary {
-  color: var(--text-color-primary);
+  /* color: var(--text-color-primary); */
 }
 
 .text_color_secondary {
