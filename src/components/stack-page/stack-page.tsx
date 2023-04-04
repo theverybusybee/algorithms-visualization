@@ -77,19 +77,17 @@ export const StackPage: React.FC = () => {
           <Button
             extraClass={styles.button}
             text="Добавить"
+            data-testid="add-button"
             linkedList="small"
             type="submit"
-             disabled={
-              !inputState &&
-              (!stackArrState.length ||
-              (activeButton && activeButton !== StackAndQueueButtons.Add))
-                ? true
-                : false
+            disabled={
+              !inputState
             }
             isLoader={activeButton === StackAndQueueButtons.Add && true}
           ></Button>
           <Button
             extraClass={styles.button}
+            data-testid="remove-button"
             text="Удалить"
             linkedList="small"
             onClick={popElement}
@@ -106,6 +104,7 @@ export const StackPage: React.FC = () => {
             text="Очистить"
             linkedList="small"
             onClick={clearStack}
+            data-testid="clear-button"
             disabled={
               (activeButton && activeButton !== StackAndQueueButtons.Clear) ||
               !stackArrState.length

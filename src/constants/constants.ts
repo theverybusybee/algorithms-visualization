@@ -8,4 +8,7 @@ export const testQueueCard = '[data-testid="queue-card"]';
 export const testListCard = '[data-testid="list-card"]';
 export const testInput = '[data-testid="input"]';
 export const testButton = '[data-testid="button"]';
+export const addButton = '[data-testid="add-button"]';
+export const removeButton = '[data-testid="remove-button"]';
+export const clearButton = '[data-testid="clear-button"]';
 export const testCircle = '[data-testid="circle"]';

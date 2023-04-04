@@ -8,6 +8,7 @@ import {
   ITERATION_TIME_FOR_ANIMATION_LONG,
   ITERATION_TIME_FOR_ANIMATION_SHORT,
 } from "../../src/components/utils/constants";
+import { colors } from "../constants";
 
 describe("string sorting works correctly", function () {
   beforeEach(function () {
@@ -27,33 +28,33 @@ describe("string sorting works correctly", function () {
     const stringLength = inputString.length;
 
     const firstIterationColors = [
-      "rgb(210, 82, 225)",
-      "rgb(0, 50, 255)",
-      "rgb(0, 50, 255)",
-      "rgb(0, 50, 255)",
-      "rgb(0, 50, 255)",
-      "rgb(0, 50, 255)",
-      "rgb(210, 82, 225)",
+      colors.changing,
+      colors.default,
+      colors.default,
+      colors.default,
+      colors.default,
+      colors.default,
+      colors.changing,
     ];
 
     const secondIterationColors = [
-      "rgb(127, 224, 81)",
-      "rgb(210, 82, 225)",
-      "rgb(0, 50, 255)",
-      "rgb(0, 50, 255)",
-      "rgb(0, 50, 255)",
-      "rgb(210, 82, 225)",
-      "rgb(127, 224, 81)",
+      colors.modified,
+      colors.changing,
+      colors.default,
+      colors.default,
+      colors.default,
+      colors.changing,
+      colors.modified,
     ];
 
     const lastIterationColors = [
-      "rgb(127, 224, 81)",
-      "rgb(127, 224, 81)",
-      "rgb(127, 224, 81)",
-      "rgb(127, 224, 81)",
-      "rgb(127, 224, 81)",
-      "rgb(127, 224, 81)",
-      "rgb(127, 224, 81)",
+      colors.modified,
+      colors.modified,
+      colors.modified,
+      colors.modified,
+      colors.modified,
+      colors.modified,
+      colors.modified,
     ];
 
     cy.get(testInput).type(inputString);
