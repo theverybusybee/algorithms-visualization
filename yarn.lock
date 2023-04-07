@@ -3631,10 +3631,10 @@
   "resolved" "https://registry.npmjs.org/csstype/-/csstype-3.0.11.tgz"
   "version" "3.0.11"
 
-"cypress@^12.0.2":
-  "integrity" "sha512-WnLx1DpnbF1vbpDBkgP14rK5yS3U+Gvxrv2fsB4Owma26oIyENj7DDRnsJbSZuTfG4mcuUJxAkRHJR2wBqBfMA=="
-  "resolved" "https://registry.npmjs.org/cypress/-/cypress-12.0.2.tgz"
-  "version" "12.0.2"
+"cypress@^12.9.0":
+  "integrity" "sha512-Ofe09LbHKgSqX89Iy1xen2WvpgbvNxDzsWx3mgU1mfILouELeXYGwIib3ItCwoRrRifoQwcBFmY54Vs0zw7QCg=="
+  "resolved" "https://registry.npmjs.org/cypress/-/cypress-12.9.0.tgz"
+  "version" "12.9.0"
   dependencies:
     "@cypress/request" "^2.88.10"
     "@cypress/xvfb" "^1.2.4"
@@ -3653,7 +3653,7 @@
     "commander" "^5.1.0"
     "common-tags" "^1.8.0"
     "dayjs" "^1.10.4"
-    "debug" "^4.3.2"
+    "debug" "^4.3.4"
     "enquirer" "^2.3.6"
     "eventemitter2" "6.4.7"
     "execa" "4.1.0"
@@ -3740,7 +3740,7 @@
   dependencies:
     "ms" "^2.1.1"
 
-"debug@^4.1.0", "debug@^4.1.1", "debug@^4.3.2", "debug@4":
+"debug@^4.1.0", "debug@^4.1.1", "debug@^4.3.2", "debug@^4.3.4", "debug@4":
   "integrity" "sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ=="
   "resolved" "https://registry.npmjs.org/debug/-/debug-4.3.4.tgz"
   "version" "4.3.4"
