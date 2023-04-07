@@ -1,10 +1,6 @@
-import renderer from "react-test-renderer";
-import { fireEvent, render, screen } from "@testing-library/react";
-import { TSortingStringArray } from "../utils/types";
 import { ElementStates } from "../../types/element-states";
 import { bubbleSort } from "../utils/sort-functions";
 import { SortArrayButtons } from "../../types/buttons";
-import { sortStringArray } from "../string/string";
 
 describe("Sorting algorithms test", () => {
   it("Empty array sorting using bubble sort in ascending order", async () => {

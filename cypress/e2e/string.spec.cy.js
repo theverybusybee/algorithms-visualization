@@ -1,6 +1,6 @@
 import {
   baseURL,
-  testButton,
+  submitButton,
   testCircle,
   testInput,
 } from "../../src/constants/constants";
@@ -17,7 +17,7 @@ describe("string sorting works correctly", function () {
 
   it("is button disabled while input is empty", function () {
     cy.get(testInput).should("be.empty");
-    cy.get(testButton).should("be.disabled");
+    cy.get(submitButton).should("be.disabled");
   });
 
   it("string expands properly", function () {
@@ -58,8 +58,8 @@ describe("string sorting works correctly", function () {
     ];
 
     cy.get(testInput).type(inputString);
-    cy.get(testButton).should("not.be.disabled");
-    cy.get(testButton).click();
+    cy.get(submitButton).should("not.be.disabled");
+    cy.get(submitButton).click();
 
     cy.get(testCircle).each((el, index, list) => {
       cy.get(list).should("have.length", stringLength);
@@ -73,7 +73,7 @@ describe("string sorting works correctly", function () {
 
     cy.wait(ITERATION_TIME_FOR_ANIMATION_SHORT);
 
-    cy.get(testCircle).each((el, index, list) => {
+    cy.get(testCircle).each((el, index) => {
       cy.get(el).contains(stringAfterFirstIteration[index]);
       cy.get(el).should(
         "have.css",
@@ -84,7 +84,7 @@ describe("string sorting works correctly", function () {
 
     cy.wait(ITERATION_TIME_FOR_ANIMATION_LONG);
 
-    cy.get(testCircle).each((el, index, list) => {
+    cy.get(testCircle).each((el, index) => {
       cy.get(el).contains(reversedString[index]);
       cy.get(el).should("have.css", "border-color", lastIterationColors[index]);
     });

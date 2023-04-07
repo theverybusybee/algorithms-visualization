@@ -8,7 +8,7 @@ import {
   testListCard,
 } from "../../src/constants/constants";
 
-describe("app works correctly with routes", function () {
+describe("app routers work properly", function () {
   beforeEach(function () {
     cy.visit(baseURL);
   });

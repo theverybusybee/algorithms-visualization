@@ -1,5 +1,6 @@
 import renderer from "react-test-renderer";
 import { Button } from "./button";
+import { fireEvent, render, screen } from "@testing-library/react";
 
 describe("button ui-component", () => {
   it("button component has inner text", () => {
@@ -24,10 +25,10 @@ describe("button ui-component", () => {
     expect(loadingButton).toMatchSnapshot();
   });
 
-  // it("button works correctly after click event", () => {
-  //   const testFunction = jest.fn();
-  //   render(<Button onClick={testFunction} />);
-  //   fireEvent.click(screen.getByRole("button"));
-  //   expect(testFunction).toHaveBeenCalled();
-  // });
+  it("button works correctly after click event", () => {
+    const testFunction = jest.fn();
+    render(<Button onClick={testFunction} />);
+    fireEvent.click(screen.getByRole("button"));
+    expect(testFunction).toHaveBeenCalled();
+  });
 });

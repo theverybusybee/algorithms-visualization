@@ -8,11 +8,10 @@ import {
 } from "../../src/constants/constants";
 import {
   ITERATION_TIME_FOR_ANIMATION_LONG,
-  ITERATION_TIME_FOR_ANIMATION_SHORT,
 } from "../../src/components/utils/constants";
 import { colors } from "../constants";
 
-describe("string sorting works correctly", function () {
+describe("stack works correctly", function () {
   beforeEach(function () {
     cy.visit(`${baseURL}/stack`);
   });
@@ -61,7 +60,6 @@ describe("string sorting works correctly", function () {
     cy.get(removeButton).click();
     cy.get(testCircle).should("have.length", inputNumbers.length);
     cy.get(testCircle).each((el, index) => {
-      console.log(inputNumbers[index]);
       cy.get(el).contains(inputNumbers[index]);
     });
     cy.get(testCircle)
