@@ -106,6 +106,7 @@ export const QueuePage: React.FC = () => {
           <Button
             extraClass={styles.button}
             text="Добавить"
+            data-testid="add-button"
             linkedList="small"
             onClick={addToQueue}
             disabled={
@@ -120,6 +121,7 @@ export const QueuePage: React.FC = () => {
           <Button
             extraClass={styles.button}
             text="Удалить"
+            data-testid="remove-button"
             linkedList="small"
             onClick={removeFromQueue}
             disabled={
@@ -134,6 +136,7 @@ export const QueuePage: React.FC = () => {
           <Button
             extraClass={styles.button}
             text="Очистить"
+            data-testid="clear-button"
             linkedList="small"
             disabled={
               isQueueEmpty ||

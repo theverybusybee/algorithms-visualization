@@ -37,6 +37,7 @@ export const Button: React.FC<ButtonProps> = ({
       className={className}
       type={type}
       disabled={isLoader || disabled}
+      data-testid='submit-button'
       {...rest}
     >
       {isLoader ? (
