@@ -15,6 +15,44 @@ import { Input } from "../ui/input/input";
 import { Button } from "../ui/button/button";
 import { Circle } from "../ui/circle/circle";
 
+const swap = (
+  firstElement: number,
+  secondElement: number,
+  arr: TSortingStringArray[]
+) => {
+  const saveFirstElement = arr[firstElement];
+  arr[firstElement] = arr[secondElement];
+  arr[secondElement] = saveFirstElement;
+  return arr;
+};
+
+export async function sortStringArray(
+  arr: TSortingStringArray[],
+  setSortingCharactersState: Dispatch<SetStateAction<TSortingStringArray[]>>,
+  setButtonState: Dispatch<SetStateAction<boolean>>
+) {
+  setButtonState(true);
+  const mid = Math.floor((arr.length - 1) / 2);
+  for (
+    let firstPointerIndex = 0;
+    firstPointerIndex <= mid;
+    firstPointerIndex++
+  ) {
+    const secondPointerIndex = arr.length - 1 - firstPointerIndex;
+    if (firstPointerIndex !== secondPointerIndex) {
+      arr[firstPointerIndex].type = ElementStates.Changing;
+      arr[secondPointerIndex].type = ElementStates.Changing;
+      setSortingCharactersState([...arr]);
+      await setDelayForAnimation(ITERATION_TIME_FOR_ANIMATION_LONG);
+    }
+    swap(firstPointerIndex, secondPointerIndex, arr);
+    arr[firstPointerIndex].type = ElementStates.Modified;
+    arr[secondPointerIndex].type = ElementStates.Modified;
+    setSortingCharactersState([...arr]);
+  }
+  setButtonState(false);
+}
+
 export const StringComponent: React.FC = () => {
   const [inputValueState, setInputValueState] = useState<TStringArray>([]);
   const [inputValue, setInputValue] = useState<string>("");
@@ -35,46 +73,9 @@ export const StringComponent: React.FC = () => {
       return { value: item, type: ElementStates.Default };
     });
     setSortingCharactersState([...arrForDisplay]);
-    sortStringArray(arrForDisplay, setSortingCharactersState);
+    sortStringArray(arrForDisplay, setSortingCharactersState, setButtonState);
     setInputValue("");
   };
-
-  const swap = (
-    firstElement: number,
-    secondElement: number,
-    arr: TSortingStringArray[]
-  ) => {
-    const saveFirstElement = arr[firstElement];
-    arr[firstElement] = arr[secondElement];
-    arr[secondElement] = saveFirstElement;
-    return arr;
-  };
-
-  async function sortStringArray(
-    arr: TSortingStringArray[],
-    setSortingCharactersState: Dispatch<SetStateAction<TSortingStringArray[]>>
-  ) {
-    setButtonState(true);
-    const mid = Math.floor((arr.length - 1) / 2);
-    for (
-      let firstPointerIndex = 0;
-      firstPointerIndex <= mid;
-      firstPointerIndex++
-    ) {
-      const secondPointerIndex = arr.length - 1 - firstPointerIndex;
-      if (firstPointerIndex !== secondPointerIndex) {
-        arr[firstPointerIndex].type = ElementStates.Changing;
-        arr[secondPointerIndex].type = ElementStates.Changing;
-        setSortingCharactersState([...arr]);
-        await setDelayForAnimation(ITERATION_TIME_FOR_ANIMATION_LONG);
-      }
-      swap(firstPointerIndex, secondPointerIndex, arr);
-      arr[firstPointerIndex].type = ElementStates.Modified;
-      arr[secondPointerIndex].type = ElementStates.Modified;
-      setSortingCharactersState([...arr]);
-    }
-    setButtonState(false);
-  }
 
   return (
     <SolutionLayout title="Строка">

@@ -31,6 +31,7 @@ export const Input: React.FC<InputProps> = ({
         maxLength={maxLength}
         max={max}
         min={min}
+        data-testid='input'
         {...rest}
       />
       {isLimitText && (
