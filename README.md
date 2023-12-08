@@ -23,8 +23,6 @@ npm run start
 
 Разворот строки
 
-<img src="./src/images/gifs/string.gif" alt='string gif'/>
-
 ## Последовательность Фибоначчи
 
 Генерация `n` чисел последовательности Фибоначчи. 
