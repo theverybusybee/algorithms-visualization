@@ -1,6 +1,6 @@
 {
-  "homepage": "https://theverybusybee.github.io/algorithms-visualization/",
-  "name": "algorithms-project",
+  "homepage": "https://theverybusybee.github.io/algorithms-visualization",
+  "name": "algorithms-visualization",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
