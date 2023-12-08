@@ -1,4 +1,4 @@
-export const baseURL = "http://localhost:3000";
+export const baseURL = "http://192.168.0.103:3000";
 
 export const testStringCard = '[data-testid="string-card"]';
 export const testFibonacciCard = "[data-testid='fibonacci-card']";
