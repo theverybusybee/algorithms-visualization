@@ -6,13 +6,10 @@ import "./components/ui/common.css";
 import "./components/ui/box.css";
 import App from "./components/app/app";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <App />
-    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
 );
