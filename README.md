@@ -11,9 +11,15 @@
 
 ## Demo
 
+Задеплоенное приложение: https://theverybusybee.github.io/algorithms-visualization/
+
 ![Alt text](./src/images/demo.png "demo")
 
-Задеплоенное приложение: https://theverybusybee.github.io/algorithms-visualization/
+## Клонирование репозитория 
+
+```bash
+$ git clone git@github.com:theverybusybee/algorithms-visualization.git
+```
 
 ## Запуск приложения
 
@@ -43,8 +49,8 @@ $ npm run test
 ```bash
 $ npm run cy:run
 ```
+## Запуск приложения
 
-###
 Запустите [http://localhost:3000](http://localhost:3000), чтобы отобразить результат запуска.
 
 ## Description
